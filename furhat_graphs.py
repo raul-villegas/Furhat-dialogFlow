@@ -43,7 +43,3 @@ plt.tight_layout()
 
 # Save chart to PNG file
 plt.savefig('fallback_rates_pie.png')
-
-
-# Pastel colors: ['#f39c12', '#e74c3c', '#16a085', '#3498db', '#9b59b6']
-# Bright and bold: ['#f1c40f', '#e67e22', '#e74c3c', '#3498db', '#9b59b6']
