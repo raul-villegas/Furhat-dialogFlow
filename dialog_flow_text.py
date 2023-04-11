@@ -1,13 +1,12 @@
 import os
 from google.cloud import dialogflow_v2 as dialogflow
 
-# Install: speech_recognition, PyAudio, gtts & pygame
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/RAVA/Documents/Robotics Master/2A_Quartile/Conversational Agents/Furhat/furhat-381919-d00038ede0c6.json"
+# Set up credentials for accessing the Dialogflow API
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "PATH OF JSON KEY"
 
 # Set up a connection to the Dialogflow API
 session_client = dialogflow.SessionsClient()
-session_path = session_client.session_path("furhat-381919", "d00038ede0c67e7d3ecfa58e85b9673bbe62f1fb")
+session_path = session_client.session_path("PROJECT-NAME", "PROJECT-ID")
 
 # Initialize the utterance count and fallbacks
 user_utterances=0
