@@ -32,7 +32,7 @@ fallbacks_count=0
 bot_utterances=0
 
 # Open a file for writing the conversation transcript
-with open("conversation_transcript.txt", "w") as f:
+with open(f"conversation_transcript_{conversation_id}.txt", "w") as f:
     
     # Initialize list of intents used
     intents_used = []
