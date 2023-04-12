@@ -8,10 +8,10 @@ import csv
 ## GOOGLE CREDENTIALS SET UP
 
 # Set up credentials for accessing the Dialogflow API
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = ""
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "PATH TO JSON KEY"
 # Set up a connection to the Dialogflow API
 session_client = dialogflow.SessionsClient()
-session_path = session_client.session_path("","")
+session_path = session_client.session_path("PROJECT NAME","PROJECT-ID")
 
 ## FURHAT REMOTE API SET UP
 
