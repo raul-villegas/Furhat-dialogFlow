@@ -1,17 +1,17 @@
 import os
-import speech_recognition as sr
 from google.cloud import dialogflow_v2 as dialogflow
 from furhat_remote_api import FurhatRemoteAPI
 import time
 from google.api_core.exceptions import InvalidArgument
+import csv
 
 ## GOOGLE CREDENTIALS SET UP
 
 # Set up credentials for accessing the Dialogflow API
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "PATH OF JSON KEY"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "C:/Users/RAVA/Documents/Robotics Master/2A_Quartile/Conversational Agents/Furhat/furhat-381919-d00038ede0c6.json"
 # Set up a connection to the Dialogflow API
 session_client = dialogflow.SessionsClient()
-session_path = session_client.session_path("PROJECT-NAME", "PROJECT-ID")
+session_path = session_client.session_path("furhat-381919", "d00038ede0c67e7d3ecfa58e85b9673bbe62f1fb")
 
 ## FURHAT REMOTE API SET UP
 
@@ -36,6 +36,24 @@ furhat.attend(user="CLOSEST")
 # Set the LED lights
 furhat.set_led(red=50, green=50, blue=200)
 
+# Check if the file exists and create it if it doesn't
+if not os.path.exists('results.csv'):
+    with open('results.csv', 'w', newline='') as csvfile:
+        fieldnames = ['conversation_id', 'fallback_rate', 'user_utterances', 'conversation_length']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+# Read the last conversation ID from the CSV file
+with open('results.csv', 'r') as csvfile:
+    reader = csv.reader(csvfile)
+    rows = list(reader)
+    if len(rows) > 1:
+        last_id = rows[-1][0]
+    else:
+        last_id = '0'
+
+# Initialize the utterance count and fallbacks
+conversation_id = str(int(last_id) + 1)
 # Initialize the utterance count and fallbacks
 user_utterances=0
 fallbacks_count=0
@@ -115,7 +133,7 @@ with open("dialogue_transcript.txt", "w") as f:
                 continue
 
     # Calculations and evaluations
-    fallback_rate= (fallbacks_count / user_utterances)* 100
+    fallback_rate= round((fallbacks_count / user_utterances)* 100,4)
     conversation_length= user_utterances + bot_utterances
 
     # Print the number of fallbacks
@@ -135,5 +153,12 @@ with open("dialogue_transcript.txt", "w") as f:
     print("Conversation length: ", conversation_length)
     f.write("\nConversation length: " + str(conversation_length))
     
-    
+# Write the conversation data to the CSV file
+with open('results.csv', 'a', newline='') as csvfile:
+    fieldnames = ['conversation_id', 'fallback_rate', 'user_utterances', 'conversation_length']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    if csvfile.tell() == 0:
+        writer.writeheader()
+    writer.writerow({'conversation_id': conversation_id, 'fallback_rate': fallback_rate, 'user_utterances': user_utterances, 'conversation_length': conversation_length})
+
  
