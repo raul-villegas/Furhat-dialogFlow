@@ -61,6 +61,14 @@ bot_utterances=0
 
 # Open a file for writing the conversation transcript
 with open(f"dialogue_transcript_{conversation_id}.txt", "w") as f:
+    
+    # Robot introduction
+    introduction= "Hey there, I am a travel agent. I could help you booking a room, a travel ticket and even rent a car. Do you want to travel?"
+    furhat.gesture(name="OpenEyes")
+    furhat.say(text=introduction)
+    time.sleep(len(introduction) / 20)
+    furhat.gesture(name="Wink")
+    time.sleep(len(introduction) / 10)
 
     while True:
             try:
@@ -98,8 +106,8 @@ with open(f"dialogue_transcript_{conversation_id}.txt", "w") as f:
                                     # convert gesture to Gestures object, if necessary then call furhat.gesture(gesture)
                                     if gesture is not None:
                                         print("Gesture:", gesture)
-                                        furhat.gesture(name=gesture)
-                                        time.sleep(2)   
+                                        time.sleep(len(response.query_result.fulfillment_text) / 20)
+                                        furhat.gesture(name=gesture)   
 
                                 except Exception as e:
                                     print(f"Error performing gesture: {e}")            
