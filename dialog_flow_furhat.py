@@ -63,12 +63,12 @@ bot_utterances=0
 with open(f"dialogue_transcript_{conversation_id}.txt", "w") as f:
     
     # Robot introduction
-    introduction= "Hey there, I am a travel agent. I could help you booking a room, a travel ticket and even rent a car. Do you want to travel?"
+    introduction= "Hey there, I am a travel agent. I could help you booking a room, a travel ticket and even rent a car. What can I do for you?"
     furhat.gesture(name="OpenEyes")
     furhat.say(text=introduction)
     time.sleep(len(introduction) / 20)
     furhat.gesture(name="Wink")
-    time.sleep(len(introduction) / 10)
+    time.sleep(len(introduction) / 35)
 
     while True:
             try:
